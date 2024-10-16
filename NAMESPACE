@@ -1,3 +1,4 @@
 importFrom(Rcpp,evalCpp)
 useDynLib(Random, .registration = TRUE)
 export(MT)
+export(MT_CPP)
