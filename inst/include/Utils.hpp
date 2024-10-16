@@ -1,5 +1,3 @@
-#include <stdbool.h>
-#include <stdio.h>
 #include <time.h>
 
 #ifndef UTILS_H
@@ -12,7 +10,6 @@ namespace Random {
 typedef struct {
   unsigned int i_seed[N + 1];
   int mti;
-  int n_seed;
   bool initial;
 } MersenneTwister;
 

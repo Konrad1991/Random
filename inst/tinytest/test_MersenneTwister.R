@@ -14,3 +14,20 @@ set.seed(432145)
 vals <- runif(10000)
 vals_own <- Random::MT(432145, 10000)
 expect_equal(sum(vals == vals_own), 10000)
+
+
+
+set.seed(1234)
+vals <- runif(10000)
+vals_own <- Random::MT_CPP(1234, 10000)
+expect_equal(sum(vals == vals_own), 10000)
+
+set.seed(9999)
+vals <- runif(10000)
+vals_own <- Random::MT_CPP(9999, 10000)
+expect_equal(sum(vals == vals_own), 10000)
+
+set.seed(432145)
+vals <- runif(10000)
+vals_own <- Random::MT_CPP(432145, 10000)
+expect_equal(sum(vals == vals_own), 10000)
