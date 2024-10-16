@@ -5,7 +5,15 @@
 #ifndef UTILS_H
 #define UTILS_H
 
+#define N 624
 #define i2_32m1 2.328306437080797e-10
+
+typedef struct {
+  unsigned int i_seed[N + 1];
+  int mti;
+  int n_seed;
+  bool initial;
+} MersenneTwister;
 
 double fixup(double obj) {
   if (obj == 0.0) {

@@ -1,7 +1,8 @@
+#include "utils.h"
+
 #ifndef GENRAND_H
 #define GENRAND_H
 
-#define N 624
 #define M 397
 #define MATRIX_A 0x9908b0df   /* constant vector a */
 #define UPPER_MASK 0x80000000 /* most significant w-r bits */
@@ -18,9 +19,8 @@
 static int mti = N + 1;
 
 // Initializing the array with a seed
-static void MT_sgenrand(int *mt, int seed) {
+static void MT_sgenrand(unsigned int *mt, int seed) {
   int i;
-
   for (i = 0; i < N; i++) {
     mt[i] = seed & 0xffff0000;
     seed = 69069 * seed + 1;
@@ -39,17 +39,18 @@ static void MT_sgenrand(int *mt, int seed) {
 //     seed_array[N - 1].(seed_array[0] & LOWER_MASK) is
 //     discarded.Theoretically, (seed_array[0] & UPPER_MASK), seed_array[1],
 //     ..., seed_array[N - 1] can take any values except all zeros.
-double MT_genrand(int *mt) {
-  int y;
-  static int mag01[2] = {0x0, MATRIX_A};
-  mti = mt[0];
+double MT_genrand(MersenneTwister *MT) {
+  unsigned int y;
+  unsigned int *mt = MT->i_seed + 1;
+  static unsigned int mag01[2] = {0x0, MATRIX_A};
+  mti = MT->i_seed[0];
 
   if (mti >= N) { // generate N words at one time
     int kk;
 
-    if (mti == N + 1)        // if sgenrand() has not been called,
-      MT_sgenrand(mt, 4357); // a default initial seed is used
-
+    if (mti == N + 1) {
+      MT_sgenrand(mt, 4357);
+    }
     for (kk = 0; kk < N - M; kk++) {
       y = (mt[kk] & UPPER_MASK) | (mt[kk + 1] & LOWER_MASK);
       mt[kk] = mt[kk + M] ^ (y >> 1) ^ mag01[y & 0x1];
@@ -69,7 +70,7 @@ double MT_genrand(int *mt) {
   y ^= TEMPERING_SHIFT_S(y) & TEMPERING_MASK_B;
   y ^= TEMPERING_SHIFT_T(y) & TEMPERING_MASK_C;
   y ^= TEMPERING_SHIFT_L(y);
-  mt[0] = mti;
+  MT->i_seed[0] = mti;
 
   return ((double)y * 2.3283064365386963e-10); /* reals: [0,1)-interval */
 }

@@ -1,15 +1,8 @@
 #include "genrand.h"
 #include "utils.h"
 
-typedef struct {
-  unsigned int i_seed[N + 1];
-  int mti;
-  int n_seed;
-  bool initial;
-} MersenneTwister;
-
 void rng_init(MersenneTwister *mt, int seed) {
-  for (size_t i = 0; i < N; i++) {
+  for (size_t i = 0; i <= N; i++) {
     seed = seed * 69069 + 1;
     mt->i_seed[i] = seed;
   }
@@ -45,11 +38,30 @@ MersenneTwister mersenne_twister(int seed) {
   return mt;
 }
 
-int main() {
-  MersenneTwister mt = mersenne_twister(1234);
-  FILE *f = fopen("set_seed_1234_c.txt", "w");
+double runif(MersenneTwister *mt) { return fixup(MT_genrand(mt)); }
+
+void write_ints_to_file(MersenneTwister *mt, char *filename) {
+  FILE *f = fopen(filename, "w");
   for (int i = 0; i < 625; i++) {
-    fprintf(f, "%d\n", mt.i_seed[i]);
+    fprintf(f, "%d\n", mt->i_seed[i]);
   }
   fclose(f);
+}
+
+void write_doubles_to_file(double *data, int length, char *filename) {
+  FILE *f = fopen(filename, "w");
+  for (int i = 0; i < length; i++) {
+    fprintf(f, "%f\n", data[i]);
+  }
+  fclose(f);
+}
+
+int main() {
+  MersenneTwister mt = mersenne_twister(1234);
+  double *random_numbers = (double *)malloc(1000 * sizeof(double));
+  for (int i = 0; i < 1000; i++) {
+    random_numbers[i] = runif(&mt);
+  }
+  write_doubles_to_file(random_numbers, 1000, "random_numbers.txt");
+  free(random_numbers);
 }
