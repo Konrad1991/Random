@@ -1,0 +1,21 @@
+Package: Random
+Type: Package
+Title: The RNG functions of R as plain C++ code
+Version: 0.4
+Date: 2024-06-06
+Author: Krämer Konrad [aut, cre]
+Maintainer: Krämer Konrad <konrad_kraemer@yahoo.de>
+BugReports: https://github.com/Konrad1991/ast2ast
+URL: https://github.com/Konrad1991/ast2ast
+Description: The RNG functions of R as plain C++ code
+License: GPL-3
+Imports: Rcpp
+LinkingTo: Rcpp
+VignetteBuilder: knitr
+Suggests: 
+  knitr,
+  kableExtra,
+  rmarkdown,
+  tinytest,
+Encoding: UTF-8
+RoxygenNote: 7.3.2

@@ -1,7 +1,9 @@
-#include "utils.h"
+#include "utils.hpp"
 
 #ifndef GENRAND_H
 #define GENRAND_H
+
+namespace Random {
 
 #define M 397
 #define MATRIX_A 0x9908b0df   /* constant vector a */
@@ -74,5 +76,7 @@ double MT_genrand(MersenneTwister *MT) {
 
   return ((double)y * 2.3283064365386963e-10); /* reals: [0,1)-interval */
 }
+
+}; // namespace Random
 
 #endif
