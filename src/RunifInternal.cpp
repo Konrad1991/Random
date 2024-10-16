@@ -1,27 +1,9 @@
-#include "utils.hpp"
-
-#ifndef GENRAND_H
-#define GENRAND_H
+#include "RunifInternal.hpp"
 
 namespace Random {
 
-#define M 397
-#define MATRIX_A 0x9908b0df   /* constant vector a */
-#define UPPER_MASK 0x80000000 /* most significant w-r bits */
-#define LOWER_MASK 0x7fffffff /* least significant r bits */
-
-// Tempering parameters
-#define TEMPERING_MASK_B 0x9d2c5680
-#define TEMPERING_MASK_C 0xefc60000
-#define TEMPERING_SHIFT_U(y) (y >> 11)
-#define TEMPERING_SHIFT_S(y) (y << 7)
-#define TEMPERING_SHIFT_T(y) (y << 15)
-#define TEMPERING_SHIFT_L(y) (y >> 18)
-
-static int mti = N + 1;
-
 // Initializing the array with a seed
-static void MT_sgenrand(unsigned int *mt, int seed) {
+void MT_sgenrand(unsigned int *mt, int seed, int *mti) {
   int i;
   for (i = 0; i < N; i++) {
     mt[i] = seed & 0xffff0000;
@@ -29,7 +11,7 @@ static void MT_sgenrand(unsigned int *mt, int seed) {
     mt[i] |= (seed & 0xffff0000) >> 16;
     seed = 69069 * seed + 1;
   }
-  mti = N;
+  *mti = N;
 }
 
 // Initialization by "sgenrand()" is an example.Theoretically,
@@ -45,13 +27,14 @@ double MT_genrand(MersenneTwister *MT) {
   unsigned int y;
   unsigned int *mt = MT->i_seed + 1;
   static unsigned int mag01[2] = {0x0, MATRIX_A};
+  int mti = N + 1;
   mti = MT->i_seed[0];
 
   if (mti >= N) { // generate N words at one time
     int kk;
 
     if (mti == N + 1) {
-      MT_sgenrand(mt, 4357);
+      MT_sgenrand(mt, 4357, &mti);
     }
     for (kk = 0; kk < N - M; kk++) {
       y = (mt[kk] & UPPER_MASK) | (mt[kk + 1] & LOWER_MASK);
@@ -78,5 +61,3 @@ double MT_genrand(MersenneTwister *MT) {
 }
 
 }; // namespace Random
-
-#endif
