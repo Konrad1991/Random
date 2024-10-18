@@ -47,11 +47,24 @@ BEGIN_RCPP
     return rcpp_result_gen;
 END_RCPP
 }
+// unif_wh_cpp
+Rcpp::NumericVector unif_wh_cpp(unsigned int seed, unsigned int n);
+RcppExport SEXP _Random_unif_wh_cpp(SEXP seedSEXP, SEXP nSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< unsigned int >::type seed(seedSEXP);
+    Rcpp::traits::input_parameter< unsigned int >::type n(nSEXP);
+    rcpp_result_gen = Rcpp::wrap(unif_wh_cpp(seed, n));
+    return rcpp_result_gen;
+END_RCPP
+}
 
 static const R_CallMethodDef CallEntries[] = {
     {"_Random_unif_mt_cpp", (DL_FUNC) &_Random_unif_mt_cpp, 2},
     {"_Random_unif_mt_cpp_parallel", (DL_FUNC) &_Random_unif_mt_cpp_parallel, 3},
     {"_Random_unif_mt_c", (DL_FUNC) &_Random_unif_mt_c, 2},
+    {"_Random_unif_wh_cpp", (DL_FUNC) &_Random_unif_wh_cpp, 2},
     {NULL, NULL, 0}
 };
 

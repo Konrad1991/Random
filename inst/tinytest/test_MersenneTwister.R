@@ -62,3 +62,20 @@ vals2 <- runif(n / 2)
 vals <- c(vals1, vals2)
 vals_own <- Random::unif_mt_cpp_parallel(c(1234, 9999), n, 2)
 expect_equal(sum(vals == vals_own), n)
+
+
+# Test Wichmann Hill
+set.seed(1234, kind = "Wich")
+vals <- runif(n)
+vals_own <- Random::unif_wh_cpp(1234, n)
+expect_equal(sum(vals == vals_own), n)
+
+set.seed(9999)
+vals <- runif(n)
+vals_own <- Random::unif_wh_cpp(9999, n)
+expect_equal(sum(vals == vals_own), n)
+
+set.seed(432145)
+vals <- runif(n)
+vals_own <- Random::unif_wh_cpp(432145, n)
+expect_equal(sum(vals == vals_own), n)

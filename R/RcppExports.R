@@ -13,3 +13,7 @@ unif_mt_c <- function(seed, n) {
     .Call(`_Random_unif_mt_c`, seed, n)
 }
 
+unif_wh_cpp <- function(seed, n) {
+    .Call(`_Random_unif_wh_cpp`, seed, n)
+}
+
