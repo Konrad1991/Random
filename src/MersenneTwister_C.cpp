@@ -1,6 +1,6 @@
-#include "MersenneTwister.hpp"
+#include "MersenneTwister_C.hpp"
 
-namespace Random {
+namespace RNG_C {
 
 void rng_init(MersenneTwister *mt, int seed) {
   for (size_t i = 0; i <= N; i++) {
@@ -39,4 +39,4 @@ MersenneTwister mersenne_twister(int seed) {
   return mt;
 }
 
-} // namespace Random
+} // namespace RNG_C

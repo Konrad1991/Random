@@ -1,4 +1,5 @@
 importFrom(Rcpp,evalCpp)
 useDynLib(Random, .registration = TRUE)
-export(MT)
-export(MT_CPP)
+export(unif_mt_c)
+export(unif_mt_cpp)
+export(unif_mt_cpp_parallel)

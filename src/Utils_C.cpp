@@ -1,6 +1,6 @@
-#include "Utils.hpp"
+#include "Utils_C.hpp"
 
-namespace Random {
+namespace RNG_C {
 
 double fixup(double obj) {
   if (obj == 0.0) {
@@ -18,4 +18,4 @@ int init_scrambling(int seed) {
   }
   return seed;
 }
-} // namespace Random
+} // namespace RNG_C

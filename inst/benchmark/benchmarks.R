@@ -4,15 +4,15 @@ R <- function(seed, n) {
 }
 
 C <- function(seed, n) {
-  Random::MT(seed, n)
+  Random::unif_mt_c(seed, n)
 }
 
 CPP <- function(seed, n) {
-  Random::MT_CPP(seed, n, 1)
+  Random::unif_mt_cpp(seed, n)
 }
 
 CPP_TS <- function(seed, n) { # thread safe
-  Random::MT_CPP(seed, n, 6)
+  Random::unif_mt_cpp_parallel(rep(seed, 6), n, 6)
 }
 
 n <- 10^6

@@ -3,7 +3,7 @@
 #ifndef UTILS_H
 #define UTILS_H
 
-namespace Random {
+namespace RNG_C {
 #define N 624
 #define i2_32m1 2.328306437080797e-10
 
@@ -16,5 +16,5 @@ typedef struct {
 double fixup(double obj);
 int init_scrambling(int seed);
 
-} // namespace Random
+} // namespace RNG_C
 #endif

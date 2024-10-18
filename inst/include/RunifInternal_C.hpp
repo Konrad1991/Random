@@ -1,8 +1,8 @@
-#include "Utils.hpp"
+#include "Utils_C.hpp"
 #ifndef RUNIF_INTERNAL_H
 #define RUNIF_INTERNAL_H
 
-namespace Random {
+namespace RNG_C {
 #define M 397
 #define MATRIX_A 0x9908b0df   /* constant vector a */
 #define UPPER_MASK 0x80000000 /* most significant w-r bits */
@@ -19,6 +19,6 @@ namespace Random {
 void MT_sgenrand(unsigned int *mt, int seed, int *mti);
 double MT_genrand(MersenneTwister *MT);
 
-} // namespace Random
+} // namespace RNG_C
 
 #endif

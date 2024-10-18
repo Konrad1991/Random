@@ -1,6 +1,6 @@
-#include "RunifInternal.hpp"
+#include "RunifInternal_C.hpp"
 
-namespace Random {
+namespace RNG_C {
 
 // Initializing the array with a seed
 void MT_sgenrand(unsigned int *mt, int seed, int *mti) {
@@ -60,4 +60,4 @@ double MT_genrand(MersenneTwister *MT) {
   return ((double)y * 2.3283064365386963e-10); /* reals: [0,1)-interval */
 }
 
-}; // namespace Random
+}; // namespace RNG_C
