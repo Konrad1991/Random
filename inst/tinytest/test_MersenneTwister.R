@@ -79,3 +79,36 @@ set.seed(432145)
 vals <- runif(n)
 vals_own <- Random::unif_wh_cpp(432145, n)
 expect_equal(sum(vals == vals_own), n)
+
+# Test Marsaglia-Multicarry
+set.seed(1234, kind = "Marsaglia")
+vals <- runif(n)
+vals_own <- Random::unif_mmc_cpp(1234, n)
+expect_equal(sum(vals == vals_own), n)
+
+set.seed(9999)
+vals <- runif(n)
+vals_own <- Random::unif_mmc_cpp(9999, n)
+expect_equal(sum(vals == vals_own), n)
+
+set.seed(432145)
+vals <- runif(n)
+vals_own <- Random::unif_mmc_cpp(432145, n)
+expect_equal(sum(vals == vals_own), n)
+
+
+# Test Super Duper
+set.seed(1234, kind = "Super")
+vals <- runif(n)
+vals_own <- Random::unif_sd_cpp(1234, n)
+expect_equal(sum(vals == vals_own), n)
+
+set.seed(9999)
+vals <- runif(n)
+vals_own <- Random::unif_sd_cpp(9999, n)
+expect_equal(sum(vals == vals_own), n)
+
+set.seed(432145)
+vals <- runif(n)
+vals_own <- Random::unif_sd_cpp(432145, n)
+expect_equal(sum(vals == vals_own), n)

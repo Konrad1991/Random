@@ -1,10 +1,9 @@
 #include <Rcpp.h>
-#include <thread>
 
 #define i2_32m1 2.328306437080797e-10
 namespace Random {
 
-template <int N = 3> class WichmannHill {
+template <int N = 2> class MarsagliaMultiCarry {
 private:
   unsigned int i_seed[N];
 
@@ -33,44 +32,35 @@ private:
   }
 
   void fixup_seeds() {
-    i_seed[0] = i_seed[0] % 30269;
-    i_seed[1] = i_seed[1] % 30307;
-    i_seed[2] = i_seed[2] % 30323;
-
-    /* map values equal to 0 mod modulus to 1. */
     if (i_seed[0] == 0)
       i_seed[0] = 1;
     if (i_seed[1] == 0)
       i_seed[1] = 1;
-    if (i_seed[2] == 0)
-      i_seed[2] = 1;
   }
 
 public:
-  WichmannHill(int seed) {
+  MarsagliaMultiCarry(int seed) {
     int scrambled_seed = init_scrambling(seed);
     rng_init(scrambled_seed);
     fixup_seeds();
   }
 
   double runif() {
-    i_seed[0] = i_seed[0] * 171 % 30269;
-    i_seed[1] = i_seed[1] * 172 % 30307;
-    i_seed[2] = i_seed[2] * 170 % 30323;
-    double value =
-        i_seed[0] / 30269.0 + i_seed[1] / 30307.0 + i_seed[2] / 30323.0;
-    return fixup(value - (int)value); /* in [0,1) */
+    i_seed[0] = 36969 * (i_seed[0] & 0177777) + (i_seed[0] >> 16);
+    i_seed[1] = 18000 * (i_seed[1] & 0177777) + (i_seed[1] >> 16);
+    return fixup(((i_seed[0] << 16) ^ (i_seed[1] & 0177777)) *
+                 i2_32m1); /* in [0,1) */
   }
 };
 
 } // namespace Random
 
 // [[Rcpp::export]]
-Rcpp::NumericVector unif_wh_cpp(unsigned int seed, unsigned int n) {
+Rcpp::NumericVector unif_mmc_cpp(unsigned int seed, unsigned int n) {
   Rcpp::NumericVector v(n);
-  Random::WichmannHill rng(seed);
+  Random::MarsagliaMultiCarry mt(seed);
   for (unsigned int i = 0; i < n; i++) {
-    v[i] = rng.runif();
+    v[i] = mt.runif();
   }
   return v;
 }

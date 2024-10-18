@@ -10,6 +10,18 @@ Rcpp::Rostream<true>&  Rcpp::Rcout = Rcpp::Rcpp_cout_get();
 Rcpp::Rostream<false>& Rcpp::Rcerr = Rcpp::Rcpp_cerr_get();
 #endif
 
+// unif_mmc_cpp
+Rcpp::NumericVector unif_mmc_cpp(unsigned int seed, unsigned int n);
+RcppExport SEXP _Random_unif_mmc_cpp(SEXP seedSEXP, SEXP nSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< unsigned int >::type seed(seedSEXP);
+    Rcpp::traits::input_parameter< unsigned int >::type n(nSEXP);
+    rcpp_result_gen = Rcpp::wrap(unif_mmc_cpp(seed, n));
+    return rcpp_result_gen;
+END_RCPP
+}
 // unif_mt_cpp
 Rcpp::NumericVector unif_mt_cpp(unsigned int seed, unsigned int n);
 RcppExport SEXP _Random_unif_mt_cpp(SEXP seedSEXP, SEXP nSEXP) {
@@ -47,6 +59,18 @@ BEGIN_RCPP
     return rcpp_result_gen;
 END_RCPP
 }
+// unif_sd_cpp
+Rcpp::NumericVector unif_sd_cpp(unsigned int seed, unsigned int n);
+RcppExport SEXP _Random_unif_sd_cpp(SEXP seedSEXP, SEXP nSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< unsigned int >::type seed(seedSEXP);
+    Rcpp::traits::input_parameter< unsigned int >::type n(nSEXP);
+    rcpp_result_gen = Rcpp::wrap(unif_sd_cpp(seed, n));
+    return rcpp_result_gen;
+END_RCPP
+}
 // unif_wh_cpp
 Rcpp::NumericVector unif_wh_cpp(unsigned int seed, unsigned int n);
 RcppExport SEXP _Random_unif_wh_cpp(SEXP seedSEXP, SEXP nSEXP) {
@@ -61,9 +85,11 @@ END_RCPP
 }
 
 static const R_CallMethodDef CallEntries[] = {
+    {"_Random_unif_mmc_cpp", (DL_FUNC) &_Random_unif_mmc_cpp, 2},
     {"_Random_unif_mt_cpp", (DL_FUNC) &_Random_unif_mt_cpp, 2},
     {"_Random_unif_mt_cpp_parallel", (DL_FUNC) &_Random_unif_mt_cpp_parallel, 3},
     {"_Random_unif_mt_c", (DL_FUNC) &_Random_unif_mt_c, 2},
+    {"_Random_unif_sd_cpp", (DL_FUNC) &_Random_unif_sd_cpp, 2},
     {"_Random_unif_wh_cpp", (DL_FUNC) &_Random_unif_wh_cpp, 2},
     {NULL, NULL, 0}
 };

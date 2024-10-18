@@ -131,16 +131,16 @@ public:
 // [[Rcpp::export]]
 Rcpp::NumericVector unif_mt_cpp(unsigned int seed, unsigned int n) {
   Rcpp::NumericVector v(n);
-  Random::MersenneTwister mt(seed);
+  Random::MersenneTwister rng(seed);
   for (unsigned int i = 0; i < n; i++) {
-    v[i] = mt.runif();
+    v[i] = rng.runif();
   }
   return v;
 }
 
-void gen_rand(double *data, size_t n, Random::MersenneTwister<624> &mt) {
+void gen_rand(double *data, size_t n, Random::MersenneTwister<624> &rng) {
   for (size_t i = 0; i < n; i++) {
-    data[i] = mt.runif();
+    data[i] = rng.runif();
   }
 }
 
